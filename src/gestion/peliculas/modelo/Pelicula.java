@@ -1,7 +1,10 @@
 /**
  * Class Pelicula
  */
-package uni1a;
+package gestion.peliculas.modelo;
+
+import clases.Actor;
+import clases.ContenidoAudiovisual;
 
 import java.util.ArrayList;
 
@@ -9,6 +12,7 @@ import java.util.ArrayList;
 public class Pelicula extends ContenidoAudiovisual {
     private String estudio;
     private ArrayList<Actor> actores;
+
     public Pelicula(String titulo, int duracionEnMinutos, String genero, String estudio) {
         super(titulo, duracionEnMinutos, genero);
         this.estudio = estudio;
@@ -21,10 +25,6 @@ public class Pelicula extends ContenidoAudiovisual {
 
     public void setEstudio(String estudio) {
         this.estudio = estudio;
-    }
-
-    public void agregarActores(String nombre) {
-        actores.add(new Actor(nombre));
     }
 
     @Override
@@ -42,5 +42,8 @@ public class Pelicula extends ContenidoAudiovisual {
         System.out.println("");
     }
 
-
+    @Override
+    public String toString() {
+        return "" + getTitulo() + getDuracionEnMinutos() +  getGenero() + getEstudio();
+    }
 }

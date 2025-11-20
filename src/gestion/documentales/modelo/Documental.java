@@ -1,7 +1,10 @@
 /**
  * Class Documental
  */
-package uni1a;
+package gestion.documentales.modelo;
+
+import clases.ContenidoAudiovisual;
+import clases.Investigador;
 
 import java.util.ArrayList;
 

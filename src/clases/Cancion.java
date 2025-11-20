@@ -1,4 +1,4 @@
-package uni1a;
+package clases;
 
 public class Cancion extends ContenidoAudiovisual{
     private String cantante;

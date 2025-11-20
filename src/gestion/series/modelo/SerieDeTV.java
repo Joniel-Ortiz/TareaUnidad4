@@ -1,7 +1,10 @@
 /**
  * Class SerieDeTV
  */
-package uni1a;
+package gestion.series.modelo;
+
+import clases.ContenidoAudiovisual;
+import clases.Temporada;
 
 import java.util.ArrayList;
 
@@ -10,11 +13,16 @@ public class SerieDeTV extends ContenidoAudiovisual {
     private int temporadas;
     private ArrayList<Temporada> listaTemporadas;
 
+    public SerieDeTV(String titulo, int duracionEnMinutos, String genero) {
+        super(titulo, duracionEnMinutos, genero);
+    }
+
     public SerieDeTV(String titulo, int duracionEnMinutos, String genero, int temporadas) {
         super(titulo, duracionEnMinutos, genero);
         this.temporadas = temporadas;
         this.listaTemporadas = new ArrayList<>();
     }
+
 
     public int getTemporadas() {
         return temporadas;
@@ -28,6 +36,7 @@ public class SerieDeTV extends ContenidoAudiovisual {
         listaTemporadas.add(new Temporada(numero));
 
     }
+
 
     @Override
     public void mostrarDetalles() {

@@ -1,4 +1,4 @@
-package uni1a;
+package clases;
 
 public class VideoVertical extends ContenidoAudiovisual {
     private String plataforma;
