@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 // Subclase SerieDeTV que extiende de ContenidoAudiovisual
 public class SerieDeTV extends ContenidoAudiovisual {
+    private static int contador = 0;
     private int temporadas;
     private ArrayList<Temporada> listaTemporadas;
-    private int id = 0;
+    private int id;
 
     public SerieDeTV(String titulo, int duracionEnMinutos, String genero, int temporadas) {
         super(titulo, duracionEnMinutos, genero);
-        this.id = id++;
+        this.id = contador++;
         this.temporadas = temporadas;
         this.listaTemporadas = new ArrayList<>();
     }
@@ -42,5 +43,10 @@ public class SerieDeTV extends ContenidoAudiovisual {
         System.out.println("Duración en minutos: " + getDuracionEnMinutos());
         System.out.println("Género: " + getGenero());
         System.out.println("Temporadas: " + totalTemporadas);
+    }
+
+    @Override
+    public String toString() {
+        return getTitulo() + "," + getDuracionEnMinutos() + "," + getGenero() + "," + getTemporadas();
     }
 }

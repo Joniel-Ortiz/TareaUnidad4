@@ -4,8 +4,6 @@ import gestion.controlador.Controlador;
 import gestion.documentales.modelo.Documental;
 import gestion.peliculas.modelo.Pelicula;
 import gestion.series.modelo.SerieDeTV;
-
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Vista {
@@ -23,26 +21,39 @@ public class Vista {
             System.out.println("1. Agregar contenido");
             System.out.println("2. Eliminar Contenido");
             System.out.println("3. Mostrar contenido");
-            System.out.println("4. Finalizar programa");
+            System.out.println("4. Guardar archivo");
+            System.out.println("5. Cargar archivo");
+            System.out.println("6. Finalizar programa");
             System.out.println("");
             System.out.print("Opcion: ");
 
             int opcion = leerOpcion();
 
-            if (opcion == 1) {
-                menuAgregar();
-            }
-
-            else if (opcion == 2) {
-                menuEliminar();
-            }
-
-            else if (opcion == 3) {
-                menuMostrarContenido();
-            }
-
-            else if (opcion == 4) {
-                finalizar = true;
+            switch(opcion) {
+                case 1:
+                    menuAgregar();
+                    break;
+                case 2:
+                    menuEliminar();
+                    break;
+                case 3:
+                    menuMostrarContenido();
+                    break;
+                case 4:
+                    menuGuardarArchivos();
+                    break;
+                case 5:
+                    menuCargarArchivos();
+                    break;
+                case 6:
+                    finalizar = true;
+                    System.out.println("");
+                    System.out.println("Finalizando programa...");
+                    break;
+                default:
+                    System.out.println("");
+                    System.out.println("Opcion no valida, intenta de nuevo.");
+                    break;
             }
         }
     }
@@ -62,19 +73,7 @@ public class Vista {
             System.out.print("Opcion: ");
             int opcionAgregar = leerOpcion();
 
-            if (opcionAgregar == 1) {
-                controlador.agregarContenido(opcionAgregar);
-                System.out.println("");
-                System.out.println("Contenido agregado exitosamente!");
-            }
-
-            else if (opcionAgregar == 2) {
-                controlador.agregarContenido(opcionAgregar);
-                System.out.println("");
-                System.out.println("Contenido agregado exitosamente!");
-            }
-
-            else if (opcionAgregar == 3) {
+            if (opcionAgregar > 0 && opcionAgregar < 4) {
                 controlador.agregarContenido(opcionAgregar);
                 System.out.println("");
                 System.out.println("Contenido agregado exitosamente!");
@@ -82,6 +81,11 @@ public class Vista {
 
             else if (opcionAgregar == 4) {
                 regresarMenuAgregar = true;
+            }
+
+            else {
+                System.out.println("");
+                System.out.println("Opcion no valida, intenta de nuevo.");
             }
         }
     }
@@ -116,6 +120,11 @@ public class Vista {
             else if (opcionEliminar == 4) {
                 regresarMenuEliminar = true;
             }
+
+            else {
+                System.out.println("");
+                System.out.println("Opcion no valida, intenta de nuevo.");
+            }
         }
     }
 
@@ -141,8 +150,76 @@ public class Vista {
             else if (opcionMostrar == 4) {
                 regresarMenuMostrar = true;
             }
-        }
 
+            else {
+                System.out.println("");
+                System.out.println("Opcion no valida, intenta de nuevo.");
+            }
+        }
+    }
+
+    public void menuGuardarArchivos () {
+
+        boolean regresarMenuGuardar = false;
+
+        while(!regresarMenuGuardar) {
+            System.out.println("");
+            System.out.println("Elige el tipo de contenido que deseas guardar:");
+            System.out.println("1. Pelicula");
+            System.out.println("2. Serie de TV");
+            System.out.println("3. Documental");
+            System.out.println("4. Regresar");
+            System.out.println("");
+            System.out.print("Opcion: ");
+            int opcionGuardar = leerOpcion();
+
+            if (opcionGuardar > 0 && opcionGuardar < 4) {
+                controlador.guardarContenido(opcionGuardar);
+                System.out.println("");
+                System.out.println("Archivo guardado exitosamente!");
+            }
+
+            else if (opcionGuardar == 4) {
+                regresarMenuGuardar = true;
+            }
+
+            else {
+                System.out.println("");
+                System.out.println("Opcion no valida, intenta de nuevo.");
+            }
+        }
+    }
+
+    public void menuCargarArchivos () {
+
+        boolean regresarMenuCargar = false;
+
+        while(!regresarMenuCargar) {
+            System.out.println("");
+            System.out.println("Elige el tipo de contenido que deseas cargar:");
+            System.out.println("1. Pelicula");
+            System.out.println("2. Serie de TV");
+            System.out.println("3. Documental");
+            System.out.println("4. Regresar");
+            System.out.println("");
+            System.out.print("Opcion: ");
+            int opcionCargar = leerOpcion();
+
+            if (opcionCargar > 0 && opcionCargar < 4) {
+                controlador.cargarContenido(opcionCargar);
+                System.out.println("");
+                System.out.println("Archivo cargado exitosamente!");
+            }
+
+            else if (opcionCargar == 4) {
+                regresarMenuCargar = true;
+            }
+
+            else {
+                System.out.println("");
+                System.out.println("Opcion no valida, intenta de nuevo.");
+            }
+        }
     }
 
     public int leerOpcion() {

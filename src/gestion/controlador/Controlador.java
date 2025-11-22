@@ -1,11 +1,10 @@
 package gestion.controlador;
 
-import clases.ContenidoAudiovisual;
 import gestion.documentales.modelo.Documental;
 import gestion.peliculas.modelo.Pelicula;
 import gestion.series.modelo.SerieDeTV;
 import gestion.vista.Vista;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -89,6 +88,123 @@ public class Controlador {
         else if (opcion == 3) {
             for (Documental documental : documentales) {
                 documental.mostrarDetalles();
+            }
+        }
+    }
+
+    public void guardarContenido(int opcion) {
+
+        if (opcion == 1) {
+            try(BufferedWriter writerPelicula = new BufferedWriter(new FileWriter("peliculas.txt"))) {
+                for (Pelicula indice : peliculas) {
+                    writerPelicula.write(indice.toString());
+                    writerPelicula.newLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        else if (opcion == 2) {
+            try(BufferedWriter writerSerie = new BufferedWriter(new FileWriter("seriesTV.txt"))) {
+                for (SerieDeTV indice : seriesTV) {
+                    writerSerie.write(indice.toString());
+                    writerSerie.newLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        else if (opcion == 3) {
+            try(BufferedWriter writerDocumental = new BufferedWriter(new FileWriter("documentales.txt"))) {
+                for (Documental indice : documentales) {
+                    writerDocumental.write(indice.toString());
+                    writerDocumental.newLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void cargarContenido(int opcion) {
+
+        if (opcion == 1) {
+
+            try(Scanner scanner = new Scanner(new FileReader("C:\\Users\\ortiz\\IdeaProjects\\TareaUnidad4\\peliculas.txt"))) {;
+
+                String titulo = null;
+                int duracionEnMinutos = 0;
+                String genero = null;
+                String estudio = null;
+
+                scanner.useDelimiter(",|\\R");
+
+                while (scanner.hasNext()) {
+
+                    titulo = scanner.next().trim();
+                    duracionEnMinutos = scanner.nextInt();
+                    genero = scanner.next().trim();
+                    estudio = scanner.next().trim();
+
+                    peliculas.add(new Pelicula(titulo, duracionEnMinutos, genero, estudio));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (opcion == 2) {
+
+            try(Scanner scanner = new Scanner(new FileReader("C:\\Users\\ortiz\\IdeaProjects\\TareaUnidad4\\seriesTV.txt"))) {;
+
+                String titulo = null;
+                int duracionEnMinutos = 0;
+                String genero = null;
+                int temporadas = 0;
+
+                scanner.useDelimiter(",|\\R");
+
+                while (scanner.hasNext()) {
+
+                    titulo = scanner.next().trim();
+                    duracionEnMinutos = scanner.nextInt();
+                    genero = scanner.next().trim();
+                    temporadas = scanner.nextInt();
+
+                    seriesTV.add(new SerieDeTV(titulo, duracionEnMinutos, genero, temporadas));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (opcion == 3) {
+
+            try(Scanner scanner = new Scanner(new FileReader("C:\\Users\\ortiz\\IdeaProjects\\TareaUnidad4\\documentales.txt"))) {;
+
+                String titulo = null;
+                int duracionEnMinutos = 0;
+                String genero = null;
+                String tema = null;
+
+                scanner.useDelimiter(",|\\R");
+
+                while (scanner.hasNext()) {
+
+                    titulo = scanner.next().trim();
+                    duracionEnMinutos = scanner.nextInt();
+                    genero = scanner.next().trim();
+                    tema = scanner.next().trim();
+
+                    documentales.add(new Documental(titulo, duracionEnMinutos, genero, tema));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

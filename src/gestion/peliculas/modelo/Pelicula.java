@@ -10,13 +10,15 @@ import java.util.ArrayList;
 
 // Subclase Pelicula que extiende de ContenidoAudiovisual
 public class Pelicula extends ContenidoAudiovisual {
+
+    private static int contador = 0;
     private String estudio;
     private ArrayList<Actor> actores;
     private int id;
 
     public Pelicula(String titulo, int duracionEnMinutos, String genero, String estudio) {
         super(titulo, duracionEnMinutos, genero);
-        this.id = id++;
+        this.id = contador++;
         this.estudio = estudio;
         this.actores = new ArrayList<>();
     }
@@ -41,15 +43,11 @@ public class Pelicula extends ContenidoAudiovisual {
         System.out.println("Duración en minutos: " + getDuracionEnMinutos());
         System.out.println("Género: " + getGenero());
         System.out.println("Estudio: " + estudio);
-        System.out.print("Actores: ");
-        for (Actor indice:actores) {
-            System.out.print("[" + indice.getNombre() + "] ");
-        }
-        System.out.println("");
+
     }
 
     @Override
     public String toString() {
-        return "" + getTitulo() + getDuracionEnMinutos() +  getGenero() + getEstudio();
+        return getTitulo() + "," + getDuracionEnMinutos() + "," + getGenero() + "," + getEstudio();
     }
 }

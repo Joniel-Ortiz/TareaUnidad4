@@ -18,14 +18,5 @@ public class Main {
         vista.setControlador(controlador);
         vista.menuPrincipal();
 
-
-
-
-
-
-
-
-
-
     }
 }

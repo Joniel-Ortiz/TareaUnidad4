@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 // Subclase Documental que extiende de ContenidoAudiovisual
 public class Documental extends ContenidoAudiovisual {
+    private static int contador = 0;
     private String tema;
     private ArrayList<Investigador> investigadores;
     private int id;
 
     public Documental(String titulo, int duracionEnMinutos, String genero, String tema) {
         super(titulo, duracionEnMinutos, genero);
-        this.id = id++;
+        this.id = contador++;
         this.tema = tema;
         this.investigadores = new ArrayList<>();
     }
@@ -46,5 +47,10 @@ public class Documental extends ContenidoAudiovisual {
             System.out.print("[" + indice.getNombre() + "] ");
         }
         System.out.println();
+    }
+
+    @Override
+    public String toString() {
+        return getTitulo() + "," +  getDuracionEnMinutos() + "," + getGenero() + "," + getTema();
     }
 }
