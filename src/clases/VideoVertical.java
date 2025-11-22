@@ -3,9 +3,11 @@ package clases;
 public class VideoVertical extends ContenidoAudiovisual {
     private String plataforma;
     private String creador;
+    private int id;
 
     public VideoVertical(String titulo, int duracionEnMinutos, String genero, String plataforma, String creador) {
         super(titulo, duracionEnMinutos, genero);
+        this.id = id++;
         this.plataforma = plataforma;
         this.creador = creador;
     }
@@ -30,7 +32,7 @@ public class VideoVertical extends ContenidoAudiovisual {
     public void mostrarDetalles() {
         System.out.println("");
         System.out.println("Detalles de Video:");
-        System.out.println("ID: " + getId());
+        System.out.println("ID: " + id);
         System.out.println("Titulo: " + getTitulo());
         System.out.println("Creador: " + creador);
         System.out.println("Plataforma: " + plataforma);

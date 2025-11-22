@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class Documental extends ContenidoAudiovisual {
     private String tema;
     private ArrayList<Investigador> investigadores;
+    private int id;
 
     public Documental(String titulo, int duracionEnMinutos, String genero, String tema) {
         super(titulo, duracionEnMinutos, genero);
+        this.id = id++;
         this.tema = tema;
         this.investigadores = new ArrayList<>();
     }
@@ -33,8 +35,8 @@ public class Documental extends ContenidoAudiovisual {
 
     @Override
     public void mostrarDetalles() {
-        System.out.println("Detalles del Documental:");
-        System.out.println("ID: " + getId());
+        System.out.println("");
+        System.out.println("ID: " + id);
         System.out.println("Título: " + getTitulo());
         System.out.println("Duración en minutos: " + getDuracionEnMinutos());
         System.out.println("Género: " + getGenero());

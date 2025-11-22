@@ -1,161 +1,96 @@
 package gestion.controlador;
 
-import gestion.documentales.modelo.DocumentalModelo;
-import gestion.peliculas.modelo.PeliculaModelo;
-import gestion.series.modelo.SerieTVModelo;
+import clases.ContenidoAudiovisual;
+import gestion.documentales.modelo.Documental;
+import gestion.peliculas.modelo.Pelicula;
+import gestion.series.modelo.SerieDeTV;
 import gestion.vista.Vista;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Controlador {
-    Vista vista = new Vista();
-    PeliculaModelo peliculaModelo = new PeliculaModelo();
-    SerieTVModelo serieTVModelo = new SerieTVModelo();
-    DocumentalModelo documentalModelo = new DocumentalModelo();
 
-    public void iniciarPrograma () {
+    private Vista vista;
+    private ArrayList<Pelicula> peliculas;
+    private ArrayList<SerieDeTV> seriesTV;
+    private ArrayList<Documental> documentales;
 
-        boolean finalizar = false;
+    public Controlador () {
 
-        while (!finalizar) {
+    }
 
-            vista.menuPrincipal();
-            int opcionMenuPrincipal = vista.leerOpcion();
+    public Controlador(Vista vista, ArrayList<Pelicula> peliculas, ArrayList<SerieDeTV> seriesTV, ArrayList<Documental> documentales) {
+        this.vista = vista;
+        this.peliculas = peliculas;
+        this.seriesTV = seriesTV;
+        this.documentales = documentales;
+    }
 
-            switch (opcionMenuPrincipal) { // Switch de Menu Principal
+    public void agregarContenido(int opcion) {
 
-                case 1: // Menu Pelicula
+        if (opcion == 1) {
+            peliculas.add(vista.pedirDatosPelicula());
+        }
 
-                    boolean regresarMenuPelicula = false;
+        else if (opcion== 2) {
+            seriesTV.add(vista.pedirDatosSerieTV());
+        }
 
-                    while (!regresarMenuPelicula) {
+        else if (opcion == 3) {
+            documentales.add(vista.pedirDatosDocumental());
+        }
+    }
 
-                        vista.menuPelicula();
-                        int opcionMenuPelicula = vista.leerOpcion();
+    public void eliminarContenido(int opcion) {
 
+        if (opcion == 1) {
 
-                        switch (opcionMenuPelicula) { // Switch de Opciones Pelicula
+            int idPelicula = vista.leerOpcion();
 
-                            case 1: // Agregar Pelicula
+            peliculas.remove(idPelicula);
+        }
 
-                                peliculaModelo.agregarPelicula(vista.pedirDatosPelicula());
-                                System.out.println("");
-                                System.out.println("La pelicula ha sido agregada exitosamente!");
-                                break;
+        else if (opcion == 2) {
+            for (SerieDeTV indice : seriesTV) {
+                indice.mostrarDetalles();
+            }
 
-                            case 2: // Eliminar Pelicula
+            int idSerie = vista.leerOpcion();
 
-                                peliculaModelo.eliminarContenido();
-                                System.out.println("");
-                                System.out.println("Pelicula eliminada con exito!");
-                                break;
+            seriesTV.remove(idSerie);
+        }
 
-                            case 3: // Mostrar Peliculas
+        else if (opcion== 3) {
+            for (Documental indice : documentales) {
+                indice.mostrarDetalles();
+            }
 
-                                System.out.println("");
-                                System.out.println("Lista de peliculas:");
-                                peliculaModelo.mostrarContenido();
-                                break;
+            int idDocumental = vista.leerOpcion();
 
-                            case 4: // Regresar a Menu Principal
+            documentales.remove(idDocumental);
+        }
+    }
 
-                                regresarMenuPelicula = true;
-                                break;
-                        }
-                    }
+    public void mostrarContenido(int opcion) {
 
-                    break; // Break de Menu Pelicula
+        if (opcion == 1) {
+            for (Pelicula pelicula : peliculas) {
+                pelicula.mostrarDetalles();
+            }
+        }
 
-                case 2: // Menu Serie
+        else if (opcion == 2) {
+            for (SerieDeTV serie : seriesTV) {
+                serie.mostrarDetalles();
+            }
+        }
 
-                    boolean regresarMenuSerie = false;
-
-                    while (!regresarMenuSerie) {
-
-                        vista.menuSeries();
-                        int opcionMenuSeries = vista.leerOpcion();
-
-
-                        switch (opcionMenuSeries) { // Switch de Opciones Serie
-
-                            case 1: // Agregar Serie
-
-                                serieTVModelo.agregarSerieTV(vista.pedirDatosSerie());
-                                System.out.println("");
-                                System.out.println("La serie ha sido agregada exitosamente!");
-                                break;
-
-                            case 2: // Eliminar Serie
-
-                                serieTVModelo.eliminarContenido();
-                                System.out.println("");
-                                System.out.println("Serie eliminada con exito!");
-                                break;
-
-                            case 3: // Mostrar Serie
-
-                                System.out.println("");
-                                System.out.println("Lista de series:");
-                                serieTVModelo.mostrarContenido();
-                                break;
-
-                            case 4: // Regresar a Menu Principal
-
-                                regresarMenuSerie = true;
-                                break;
-                        }
-                    }
-
-                    break; // Break Menu Serie
-
-                case 3: // Menu Documentales
-
-                    boolean regresarMenuDocumental = false;
-
-                    while (!regresarMenuDocumental) {
-
-                        vista.menuDocumentales();
-                        int opcionMenuDocumentales = vista.leerOpcion();
-
-
-                        switch (opcionMenuDocumentales) { // Switch de Opciones Serie
-
-                            case 1: // Agregar Documental
-
-                                documentalModelo.agregarDocumental(vista.pedirDatosDocumental());
-                                System.out.println("");
-                                System.out.println("El documental ha sido agregada exitosamente!");
-                                break;
-
-                            case 2: // Eliminar Documental
-
-                                documentalModelo.eliminarContenido();
-                                System.out.println("");
-                                System.out.println("Documental eliminada con exito!");
-                                break;
-
-                            case 3: // Mostrar Documental
-
-                                System.out.println("");
-                                System.out.println("Lista de documentales:");
-                                documentalModelo.mostrarContenido();
-                                break;
-
-                            case 4: // Regresar a Menu Principal
-
-                                regresarMenuDocumental = true;
-                                break;
-                        }
-                    }
-
-                    break; // Break Menu Documentales
-
-                case 4: // Finalizar Programa
-
-                    System.out.println("");
-                    System.out.println("Finalizando Programa...");
-                    finalizar = true;
-
-                    break; // Break Finalizar Programa
+        else if (opcion == 3) {
+            for (Documental documental : documentales) {
+                documental.mostrarDetalles();
             }
         }
     }
 }
+
