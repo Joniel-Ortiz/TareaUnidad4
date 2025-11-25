@@ -1,12 +1,10 @@
 package gestion.controlador;
 
-import gestion.documentales.modelo.Documental;
-import gestion.peliculas.modelo.Pelicula;
-import gestion.series.modelo.SerieDeTV;
+import gestion.modelos.*;
 import gestion.vista.Vista;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
+import clases.*;
 
 public class Controlador {
 
@@ -14,6 +12,8 @@ public class Controlador {
     private ArrayList<Pelicula> peliculas;
     private ArrayList<SerieDeTV> seriesTV;
     private ArrayList<Documental> documentales;
+    
+    
 
     public Controlador () {
 
@@ -95,7 +95,7 @@ public class Controlador {
     public void guardarContenido(int opcion) {
 
         if (opcion == 1) {
-            try(BufferedWriter writerPelicula = new BufferedWriter(new FileWriter("peliculas.txt"))) {
+            try(BufferedWriter writerPelicula = new BufferedWriter(new FileWriter("peliculas.csv"))) {
                 for (Pelicula indice : peliculas) {
                     writerPelicula.write(indice.toString());
                     writerPelicula.newLine();
@@ -106,7 +106,7 @@ public class Controlador {
         }
 
         else if (opcion == 2) {
-            try(BufferedWriter writerSerie = new BufferedWriter(new FileWriter("seriesTV.txt"))) {
+            try(BufferedWriter writerSerie = new BufferedWriter(new FileWriter("seriesTV.csv"))) {
                 for (SerieDeTV indice : seriesTV) {
                     writerSerie.write(indice.toString());
                     writerSerie.newLine();
@@ -117,7 +117,7 @@ public class Controlador {
         }
 
         else if (opcion == 3) {
-            try(BufferedWriter writerDocumental = new BufferedWriter(new FileWriter("documentales.txt"))) {
+            try(BufferedWriter writerDocumental = new BufferedWriter(new FileWriter("documentales.csv"))) {
                 for (Documental indice : documentales) {
                     writerDocumental.write(indice.toString());
                     writerDocumental.newLine();
@@ -128,27 +128,39 @@ public class Controlador {
         }
     }
 
-    public void cargarContenido(int opcion) {
+    public void cargarContenido(int opcion) { //! No carga datos de un ArrayList, Pendiente Arreglar!
 
         if (opcion == 1) {
 
-            try(Scanner scanner = new Scanner(new FileReader("C:\\Users\\ortiz\\IdeaProjects\\TareaUnidad4\\peliculas.txt"))) {;
+            try(BufferedReader reader = new BufferedReader(new FileReader("peliculas.csv"))) {;
 
-                String titulo = null;
-                int duracionEnMinutos = 0;
-                String genero = null;
-                String estudio = null;
+                String linea;
 
-                scanner.useDelimiter(",|\\R");
+                while ((linea = reader.readLine()) != null) {
 
-                while (scanner.hasNext()) {
+                    ArrayList<Actor> actores = new ArrayList<>();
+                    String[] campos = linea.split(",");
 
-                    titulo = scanner.next().trim();
-                    duracionEnMinutos = scanner.nextInt();
-                    genero = scanner.next().trim();
-                    estudio = scanner.next().trim();
+                    int id = Integer.parseInt(campos[0].trim());
+                    String titulo = campos[1].trim();
+                    int duracionEnMinutos = Integer.parseInt(campos[2].trim());
+                    String genero = campos[3].trim();
+                    String estudio = campos[4].trim();
+
+                    for (int i = 5; i < campos.length; i++) {
+                        String campo = campos[i].replaceAll("[\\[\\]\\s]", "");
+                        if (!campo.isEmpty()) {
+                            try {
+                                String nombreActores = campo;
+                                actores.add(new Actor(nombreActores));
+                            } catch (NumberFormatException e){
+
+                            }
+                        }
+                    }
 
                     peliculas.add(new Pelicula(titulo, duracionEnMinutos, genero, estudio));
+                    peliculas.get(id).agregarListaActores(actores);
                 }
 
             } catch (Exception e) {
@@ -158,23 +170,35 @@ public class Controlador {
 
         if (opcion == 2) {
 
-            try(Scanner scanner = new Scanner(new FileReader("C:\\Users\\ortiz\\IdeaProjects\\TareaUnidad4\\seriesTV.txt"))) {;
+            try (BufferedReader reader = new BufferedReader(new FileReader("seriesTV.csv"))) {
+                
+                String linea;
+        
+                while ((linea = reader.readLine()) != null) {
 
-                String titulo = null;
-                int duracionEnMinutos = 0;
-                String genero = null;
-                int temporadas = 0;
+                    ArrayList<Temporada> temporadas = new ArrayList<>();
+            
+                    String[] campos = linea.split(",");
+            
+                    int id = Integer.parseInt(campos[0].trim());
+                    String titulo = campos[1].trim();
+                    int duracionEnMinutos = Integer.parseInt(campos[2].trim());
+                    String genero = campos[3].trim();
+            
+                    for (int i = 4; i < campos.length; i++) {
+                        String campo = campos[i].replaceAll("[\\[\\]\\s]", "");
+                        if (!campo.isEmpty()) {
+                            try {
+                                    int numeroTemporada = Integer.parseInt(campo);
+                                    temporadas.add(new Temporada(numeroTemporada));
+                            } catch (NumberFormatException e) {
 
-                scanner.useDelimiter(",|\\R");
+                            }
+                        }
+                    }
 
-                while (scanner.hasNext()) {
-
-                    titulo = scanner.next().trim();
-                    duracionEnMinutos = scanner.nextInt();
-                    genero = scanner.next().trim();
-                    temporadas = scanner.nextInt();
-
-                    seriesTV.add(new SerieDeTV(titulo, duracionEnMinutos, genero, temporadas));
+                    seriesTV.add(new SerieDeTV(titulo, duracionEnMinutos, genero));
+                    seriesTV.get(id).agregarListaTemporadas(temporadas);
                 }
 
             } catch (Exception e) {
@@ -184,23 +208,38 @@ public class Controlador {
 
         if (opcion == 3) {
 
-            try(Scanner scanner = new Scanner(new FileReader("C:\\Users\\ortiz\\IdeaProjects\\TareaUnidad4\\documentales.txt"))) {;
+            try(BufferedReader reader = new BufferedReader(new FileReader("documentales.csv")) ) {;
 
-                String titulo = null;
-                int duracionEnMinutos = 0;
-                String genero = null;
-                String tema = null;
+                String linea;
 
-                scanner.useDelimiter(",|\\R");
+                while ((linea = reader.readLine()) != null) {
 
-                while (scanner.hasNext()) {
+                    ArrayList<Investigador> investigadores = new ArrayList<>();
 
-                    titulo = scanner.next().trim();
-                    duracionEnMinutos = scanner.nextInt();
-                    genero = scanner.next().trim();
-                    tema = scanner.next().trim();
+                    String[] campos = linea.split(",");
+
+                    int id = Integer.parseInt(campos[0].trim());
+                    String titulo = campos[1].trim();
+                    int duracionEnMinutos = Integer.parseInt(campos[2].trim());
+                    String genero = campos[3].trim();
+                    String tema = campos[4].trim();
+
+                    for (int i = 5; i < campos.length; i++) {
+                       String campo = campos[i].replaceAll("[\\[\\]\\s]", ""); 
+
+                       if (!campo.isEmpty()) {
+                            try {
+                                String nombreInvestigador = campo;
+                                investigadores.add(new Investigador(nombreInvestigador));
+                            } catch (NumberFormatException e) {
+
+                            }
+                       }
+                    }
 
                     documentales.add(new Documental(titulo, duracionEnMinutos, genero, tema));
+                    documentales.get(id).agregarListaInvestigadores(investigadores);
+
                 }
 
             } catch (Exception e) {
@@ -208,5 +247,19 @@ public class Controlador {
             }
         }
     }
-}
 
+    public void agregarElementosProduccion(int opcion, int idContenido) {
+        
+        if (opcion == 1) {
+            peliculas.get(idContenido).agregarActor(vista.pedirDatosActor());
+        }
+
+        else if (opcion == 2) {
+            seriesTV.get(idContenido).agregarTemporada(vista.pedirDatosTemporada());
+        }
+
+        else if (opcion == 3) {
+            documentales.get(idContenido).agregarInvestigadores(vista.pedirDatosInvestigador());
+        }
+    }
+}

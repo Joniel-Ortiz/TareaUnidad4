@@ -14,4 +14,8 @@ public class Temporada {
         this.numero = numero;
     }
 
+    @Override
+    public String toString() {
+        return "[" + numero + "]";
+    }
 }

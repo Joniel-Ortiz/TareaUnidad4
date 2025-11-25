@@ -1,10 +1,10 @@
 /**
  * Class Pelicula
  */
-package gestion.peliculas.modelo;
+package gestion.modelos;
 
 import clases.Actor;
-import clases.ContenidoAudiovisual;
+import clases.superclase.ContenidoAudiovisual;
 
 import java.util.ArrayList;
 
@@ -27,14 +27,18 @@ public class Pelicula extends ContenidoAudiovisual {
         return estudio;
     }
 
-    public void agregarActor(Actor actor) {
-        actores.add(actor);
-    }
-
     public ArrayList<Actor> getActores() {
         return actores;
     }
 
+    public void agregarActor(Actor actor) {
+        actores.add(actor);
+    }
+
+    public void agregarListaActores (ArrayList<Actor> actor) {
+        actores.addAll(actor);
+    }
+    
     @Override
     public void mostrarDetalles() {
         System.out.println("");
@@ -43,11 +47,16 @@ public class Pelicula extends ContenidoAudiovisual {
         System.out.println("Duración en minutos: " + getDuracionEnMinutos());
         System.out.println("Género: " + getGenero());
         System.out.println("Estudio: " + estudio);
+        System.out.print("Actores: ");
+        for (Actor indice : actores) {
+            System.out.print(indice.toString());
+        }
+        System.out.println(""); 
 
     }
 
     @Override
     public String toString() {
-        return getTitulo() + "," + getDuracionEnMinutos() + "," + getGenero() + "," + getEstudio();
+        return id + "," + getTitulo() + "," + getDuracionEnMinutos() + "," + getGenero() + "," + getEstudio() + "," + getActores();
     }
 }

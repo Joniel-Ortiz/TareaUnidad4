@@ -1,10 +1,10 @@
 /**
  * Class Documental
  */
-package gestion.documentales.modelo;
+package gestion.modelos;
 
-import clases.ContenidoAudiovisual;
 import clases.Investigador;
+import clases.superclase.ContenidoAudiovisual;
 
 import java.util.ArrayList;
 
@@ -22,6 +22,14 @@ public class Documental extends ContenidoAudiovisual {
         this.investigadores = new ArrayList<>();
     }
 
+    public ArrayList<Investigador> getInvestigadores() {
+        return investigadores;
+    }
+
+    public void setInvestigadores(ArrayList<Investigador> investigadores) {
+        this.investigadores = investigadores;
+    }
+
     public String getTema() {
         return tema;
     }
@@ -30,8 +38,12 @@ public class Documental extends ContenidoAudiovisual {
         this.tema = tema;
     }
 
-    public void agregarInvestigadores(String nombre) {
-        investigadores.add(new Investigador(nombre));
+    public void agregarInvestigadores(Investigador investigador) {
+        investigadores.add(investigador);
+    }
+
+    public void agregarListaInvestigadores(ArrayList<Investigador> investigador) {
+        investigadores.addAll(investigador);
     }
 
     @Override
@@ -44,13 +56,13 @@ public class Documental extends ContenidoAudiovisual {
         System.out.println("Tema: " + this.tema);
         System.out.print("Investigadores: ");
         for (Investigador indice: investigadores) {
-            System.out.print("[" + indice.getNombre() + "] ");
+            System.out.print(indice.toString());
         }
         System.out.println();
     }
 
     @Override
     public String toString() {
-        return getTitulo() + "," +  getDuracionEnMinutos() + "," + getGenero() + "," + getTema();
+        return id + "," + getTitulo() + "," +  getDuracionEnMinutos() + "," + getGenero() + "," + getTema() + "," + getInvestigadores();
     }
 }

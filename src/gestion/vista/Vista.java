@@ -1,9 +1,10 @@
 package gestion.vista;
 
 import gestion.controlador.Controlador;
-import gestion.documentales.modelo.Documental;
-import gestion.peliculas.modelo.Pelicula;
-import gestion.series.modelo.SerieDeTV;
+import gestion.modelos.Documental;
+import gestion.modelos.Pelicula;
+import gestion.modelos.SerieDeTV;
+import clases.*;
 import java.util.Scanner;
 
 public class Vista {
@@ -20,10 +21,11 @@ public class Vista {
             System.out.println("Elige la opcion que deseas:");
             System.out.println("1. Agregar contenido");
             System.out.println("2. Eliminar Contenido");
-            System.out.println("3. Mostrar contenido");
-            System.out.println("4. Guardar archivo");
-            System.out.println("5. Cargar archivo");
-            System.out.println("6. Finalizar programa");
+            System.out.println("3. Elementos de produccion");
+            System.out.println("4. Mostrar contenido");
+            System.out.println("5. Guardar archivo");
+            System.out.println("6. Cargar archivo");
+            System.out.println("7. Finalizar programa");
             System.out.println("");
             System.out.print("Opcion: ");
 
@@ -37,18 +39,22 @@ public class Vista {
                     menuEliminar();
                     break;
                 case 3:
-                    menuMostrarContenido();
+                    menuElementosProduccion();
                     break;
                 case 4:
-                    menuGuardarArchivos();
+                    menuMostrarContenido();
                     break;
                 case 5:
-                    menuCargarArchivos();
+                    menuGuardarArchivos();
                     break;
                 case 6:
+                    menuCargarArchivos();
+                    break;    
+                case 7:
                     finalizar = true;
                     System.out.println("");
                     System.out.println("Finalizando programa...");
+                    System.out.println("");
                     break;
                 default:
                     System.out.println("");
@@ -60,9 +66,9 @@ public class Vista {
 
     public void menuAgregar() {
 
-        boolean regresarMenuAgregar = false;
+        boolean regresar = false;
 
-        while (!regresarMenuAgregar) {
+        while (!regresar) {
             System.out.println("");
             System.out.println("Elige el tipo de contenido que deseas agregar:");
             System.out.println("1. Pelicula");
@@ -71,16 +77,16 @@ public class Vista {
             System.out.println("4. Regresar");
             System.out.println("");
             System.out.print("Opcion: ");
-            int opcionAgregar = leerOpcion();
+            int opcion = leerOpcion();
 
-            if (opcionAgregar > 0 && opcionAgregar < 4) {
-                controlador.agregarContenido(opcionAgregar);
+            if (opcion > 0 && opcion < 4) {
+                controlador.agregarContenido(opcion);
                 System.out.println("");
                 System.out.println("Contenido agregado exitosamente!");
             }
 
-            else if (opcionAgregar == 4) {
-                regresarMenuAgregar = true;
+            else if (opcion == 4) {
+                regresar = true;
             }
 
             else {
@@ -92,9 +98,9 @@ public class Vista {
 
     public void menuEliminar() {
 
-        boolean regresarMenuEliminar = false;
+        boolean regresar = false;
 
-        while (!regresarMenuEliminar) {
+        while (!regresar) {
             System.out.println("");
             System.out.println("Elige el tipo de contenido que deseas eliminar:");
             System.out.println("1. Pelicula");
@@ -103,22 +109,21 @@ public class Vista {
             System.out.println("4. Regresar");
             System.out.println("");
             System.out.print("Opcion: ");
+            int opcion = leerOpcion();
 
-            int opcionEliminar = leerOpcion();
-
-            if (opcionEliminar > 0 && opcionEliminar < 4) {
-                controlador.mostrarContenido(opcionEliminar);
+            if (opcion > 0 && opcion < 4) {
+                controlador.mostrarContenido(opcion);
                 System.out.println("");
                 System.out.println("Escribe el ID del contenido que deseas eliminar: ");
                 System.out.println("");
                 System.out.print("Opcion: ");
-                controlador.eliminarContenido(opcionEliminar);
+                controlador.eliminarContenido(opcion);
                 System.out.println("");
                 System.out.println("Contenido eliminado exitosamente!");
             }
 
-            else if (opcionEliminar == 4) {
-                regresarMenuEliminar = true;
+            else if (opcion == 4) {
+                regresar = true;
             }
 
             else {
@@ -130,9 +135,9 @@ public class Vista {
 
     public void menuMostrarContenido() {
 
-        boolean regresarMenuMostrar = false;
+        boolean regresar = false;
 
-        while (!regresarMenuMostrar) {
+        while (!regresar) {
             System.out.println("");
             System.out.println("Elige el tipo de contenido que deseas mostrar:");
             System.out.println("1. Pelicula");
@@ -141,14 +146,15 @@ public class Vista {
             System.out.println("4. Regresar");
             System.out.println("");
             System.out.print("Opcion: ");
-            int opcionMostrar = leerOpcion();
+            int opcion = leerOpcion();
 
-            if (opcionMostrar > 0 && opcionMostrar < 4) {
-                controlador.mostrarContenido(opcionMostrar);
+            if (opcion > 0 && opcion < 4) {
+                System.out.println("");
+                controlador.mostrarContenido(opcion);
             }
 
-            else if (opcionMostrar == 4) {
-                regresarMenuMostrar = true;
+            else if (opcion == 4) {
+                regresar = true;
             }
 
             else {
@@ -160,9 +166,9 @@ public class Vista {
 
     public void menuGuardarArchivos () {
 
-        boolean regresarMenuGuardar = false;
+        boolean regresar = false;
 
-        while(!regresarMenuGuardar) {
+        while(!regresar) {
             System.out.println("");
             System.out.println("Elige el tipo de contenido que deseas guardar:");
             System.out.println("1. Pelicula");
@@ -171,16 +177,16 @@ public class Vista {
             System.out.println("4. Regresar");
             System.out.println("");
             System.out.print("Opcion: ");
-            int opcionGuardar = leerOpcion();
+            int opcion = leerOpcion();
 
-            if (opcionGuardar > 0 && opcionGuardar < 4) {
-                controlador.guardarContenido(opcionGuardar);
+            if (opcion > 0 && opcion < 4) {
+                controlador.guardarContenido(opcion);
                 System.out.println("");
                 System.out.println("Archivo guardado exitosamente!");
             }
 
-            else if (opcionGuardar == 4) {
-                regresarMenuGuardar = true;
+            else if (opcion == 4) {
+                regresar = true;
             }
 
             else {
@@ -192,9 +198,9 @@ public class Vista {
 
     public void menuCargarArchivos () {
 
-        boolean regresarMenuCargar = false;
+        boolean regresar = false;
 
-        while(!regresarMenuCargar) {
+        while(!regresar) {
             System.out.println("");
             System.out.println("Elige el tipo de contenido que deseas cargar:");
             System.out.println("1. Pelicula");
@@ -203,16 +209,16 @@ public class Vista {
             System.out.println("4. Regresar");
             System.out.println("");
             System.out.print("Opcion: ");
-            int opcionCargar = leerOpcion();
+            int opcion = leerOpcion();
 
-            if (opcionCargar > 0 && opcionCargar < 4) {
-                controlador.cargarContenido(opcionCargar);
+            if (opcion > 0 && opcion < 4) {
+                controlador.cargarContenido(opcion);
                 System.out.println("");
                 System.out.println("Archivo cargado exitosamente!");
             }
 
-            else if (opcionCargar == 4) {
-                regresarMenuCargar = true;
+            else if (opcion == 4) {
+                regresar = true;
             }
 
             else {
@@ -220,6 +226,46 @@ public class Vista {
                 System.out.println("Opcion no valida, intenta de nuevo.");
             }
         }
+    }
+
+    public void menuElementosProduccion() {
+        
+        boolean regresar = false;
+
+        while (!regresar) {
+            System.out.println("");
+            System.out.println("Elige la opcion que deseas:");
+            System.out.println("1. Agregar Actores");
+            System.out.println("2. Agregar Temporadas");
+            System.out.println("3. Agregar Investigadores");
+            System.out.println("4. Regresar");
+            System.out.println("");
+            System.out.print("Opcion: ");
+            int opcion = leerOpcion();
+
+            if (opcion > 0 && opcion < 4) {
+
+                System.out.println("");
+                System.out.println("Escoge el ID del contenido: ");
+                controlador.mostrarContenido(opcion);
+                System.out.println("");
+                System.out.print("ID: ");
+                int idContenido = leerOpcion();
+                controlador.agregarElementosProduccion(opcion,idContenido);
+                System.out.println("");
+                System.out.println("Elemento agregado con exito!");
+            }
+
+            else if (opcion == 4) {
+                regresar = true;
+            }
+
+            else {
+                System.out.println("");
+                System.out.println("Opcion no valida, intenta de nuevo.");
+            }
+
+        } 
     }
 
     public int leerOpcion() {
@@ -249,10 +295,8 @@ public class Vista {
         int duracionEnMinutos = sc.nextInt();
         System.out.print("Genero: ");
         String genero = sc.next();
-        System.out.print("Temporadas: ");
-        int temporadas = sc.nextInt();
 
-        SerieDeTV serieTV = new SerieDeTV(titulo, duracionEnMinutos, genero, temporadas);
+        SerieDeTV serieTV = new SerieDeTV(titulo, duracionEnMinutos, genero);
         return serieTV;
     }
 
@@ -271,6 +315,33 @@ public class Vista {
         return documental;
     }
 
+    public Actor pedirDatosActor () {
+        System.out.println("");
+        System.out.print("Nombre: ");
+        String nombre = sc.next();
+
+        Actor actor = new Actor(nombre);
+        return actor;
+    }
+
+    public Temporada pedirDatosTemporada () {
+        System.out.println("");
+        System.out.print("Numero de temporada: ");
+        int numeroTemporada = sc.nextInt();
+
+        Temporada temporada = new Temporada(numeroTemporada);
+        return temporada;
+    }
+
+    public Investigador pedirDatosInvestigador () {
+        System.out.println("");
+        System.out.print("Nombre: ");
+        String nombre = sc.next();
+
+        Investigador investigador = new Investigador(nombre);
+        return investigador;
+    }
+        
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }

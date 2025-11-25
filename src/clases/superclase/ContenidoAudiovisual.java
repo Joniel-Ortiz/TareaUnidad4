@@ -1,7 +1,6 @@
-package clases;
+package clases.superclase;
 
 public abstract class ContenidoAudiovisual {
-    private static int contar = 0;
     private String titulo;
     private int duracionEnMinutos;
     private String genero;
