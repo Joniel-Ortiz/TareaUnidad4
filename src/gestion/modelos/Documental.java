@@ -46,6 +46,14 @@ public class Documental extends ContenidoAudiovisual {
         investigadores.addAll(investigador);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int setId(int id) {
+        return this.id = id;
+    }
+
     @Override
     public void mostrarDetalles() {
         System.out.println("");

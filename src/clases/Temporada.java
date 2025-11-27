@@ -1,6 +1,8 @@
 package clases;
 
-public class Temporada {
+import clases.superclase.ElementosProduccion;
+
+public class Temporada extends ElementosProduccion{
     private int numero;
 
     public Temporada(int numero) {

@@ -1,5 +1,8 @@
 package clases;
-public class Actor {
+
+import clases.superclase.ElementosProduccion;
+
+public class Actor extends ElementosProduccion{
     private String nombre;
 
     public Actor(String nombre) {

@@ -5,6 +5,8 @@ import gestion.vista.Vista;
 import java.io.*;
 import java.util.ArrayList;
 import clases.*;
+import clases.superclase.ContenidoAudiovisual;
+import clases.superclase.ElementosProduccion;
 
 public class Controlador {
 
@@ -13,8 +15,6 @@ public class Controlador {
     private ArrayList<SerieDeTV> seriesTV;
     private ArrayList<Documental> documentales;
     
-    
-
     public Controlador () {
 
     }
@@ -26,240 +26,270 @@ public class Controlador {
         this.documentales = documentales;
     }
 
-    public void agregarContenido(int opcion) {
+    public void agregarContenido(int opcion, ContenidoAudiovisual contenido) {
 
-        if (opcion == 1) {
-            peliculas.add(vista.pedirDatosPelicula());
-        }
-
-        else if (opcion== 2) {
-            seriesTV.add(vista.pedirDatosSerieTV());
-        }
-
-        else if (opcion == 3) {
-            documentales.add(vista.pedirDatosDocumental());
-        }
+        switch (opcion) {
+            case 1:
+                peliculas.add((Pelicula) contenido);
+                break;
+            case 2:
+                seriesTV.add((SerieDeTV) contenido);
+                break;
+            case 3:
+                documentales.add((Documental) contenido);
+                break;    
+        }   
     }
 
-    public void eliminarContenido(int opcion) {
+    public void eliminarContenido(int opcion, int id) {
+        
+        int indiceAEliminar = -1;
 
-        if (opcion == 1) {
+        switch (opcion) {
+            case 1:
+                
+                for (int i = 0; i < peliculas.size(); i++) {
+                    if (peliculas.get(i).getId() == id) {
+                        indiceAEliminar = i;
+                        break;
+                    }
+                }
+            
+                if (indiceAEliminar != -1) {
+                    peliculas.remove(indiceAEliminar);
+                
+                    for (Pelicula pelicula : peliculas) {
+                        if (pelicula.getId() > id) {
+                        pelicula.setId(pelicula.getId() - 1);
+                        }
+                    }
+                }
+                break;
+            case 2:
 
-            int idPelicula = vista.leerOpcion();
+                for (int i = 0; i < seriesTV.size(); i++) {
+                    if (seriesTV.get(i).getId() == id) {
+                        indiceAEliminar = i;
+                        break;
+                    }
+                }
+            
+                if (indiceAEliminar != -1) {
+                    seriesTV.remove(indiceAEliminar);
+                
+                    for (SerieDeTV serieDeTV : seriesTV) {
+                        if (serieDeTV.getId() > id) {
+                        serieDeTV.setId(serieDeTV.getId() - 1);
+                        }
+                    }
+                }
+                break;
+            case 3:
 
-            peliculas.remove(idPelicula);
-        }
-
-        else if (opcion == 2) {
-            for (SerieDeTV indice : seriesTV) {
-                indice.mostrarDetalles();
-            }
-
-            int idSerie = vista.leerOpcion();
-
-            seriesTV.remove(idSerie);
-        }
-
-        else if (opcion== 3) {
-            for (Documental indice : documentales) {
-                indice.mostrarDetalles();
-            }
-
-            int idDocumental = vista.leerOpcion();
-
-            documentales.remove(idDocumental);
-        }
+                for (int i = 0; i < documentales.size(); i++) {
+                    if (documentales.get(i).getId() == id) {
+                        indiceAEliminar = i;
+                        break;
+                    }
+                }
+            
+                if (indiceAEliminar != -1) {
+                    documentales.remove(indiceAEliminar);
+                
+                    for (Documental documental : documentales) {
+                        if (documental.getId() > id) {
+                        documental.setId(documental.getId() - 1);
+                        }
+                    }
+                }
+                break;
+            }      
     }
-
+        
     public void mostrarContenido(int opcion) {
 
-        if (opcion == 1) {
-            for (Pelicula pelicula : peliculas) {
-                pelicula.mostrarDetalles();
-            }
-        }
-
-        else if (opcion == 2) {
-            for (SerieDeTV serie : seriesTV) {
-                serie.mostrarDetalles();
-            }
-        }
-
-        else if (opcion == 3) {
-            for (Documental documental : documentales) {
-                documental.mostrarDetalles();
-            }
+        switch(opcion) {
+            case 1:
+                for (Pelicula pelicula : peliculas) {
+                    pelicula.mostrarDetalles();
+                }
+                break;
+            case 2:
+                for (SerieDeTV serie : seriesTV) {
+                    serie.mostrarDetalles();
+                }
+                break;
+            case 3:
+                for (Documental documental : documentales) {
+                    documental.mostrarDetalles();
+                }
+                break;
         }
     }
 
     public void guardarContenido(int opcion) {
 
-        if (opcion == 1) {
-            try(BufferedWriter writerPelicula = new BufferedWriter(new FileWriter("peliculas.csv"))) {
-                for (Pelicula indice : peliculas) {
-                    writerPelicula.write(indice.toString());
-                    writerPelicula.newLine();
+        switch (opcion) {
+            case 1:
+                try(BufferedWriter writerPelicula = new BufferedWriter(new FileWriter("peliculas.csv"))) {
+                    for (Pelicula indice : peliculas) {
+                        writerPelicula.write(indice.toString());
+                        writerPelicula.newLine();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        else if (opcion == 2) {
-            try(BufferedWriter writerSerie = new BufferedWriter(new FileWriter("seriesTV.csv"))) {
-                for (SerieDeTV indice : seriesTV) {
-                    writerSerie.write(indice.toString());
-                    writerSerie.newLine();
+                break;
+            case 2:
+                try(BufferedWriter writerSerie = new BufferedWriter(new FileWriter("seriesTV.csv"))) {
+                    for (SerieDeTV indice : seriesTV) {
+                        writerSerie.write(indice.toString());
+                        writerSerie.newLine();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        else if (opcion == 3) {
-            try(BufferedWriter writerDocumental = new BufferedWriter(new FileWriter("documentales.csv"))) {
-                for (Documental indice : documentales) {
-                    writerDocumental.write(indice.toString());
-                    writerDocumental.newLine();
+                break;
+            case 3:
+                try(BufferedWriter writerDocumental = new BufferedWriter(new FileWriter("documentales.csv"))) {
+                    for (Documental indice : documentales) {
+                        writerDocumental.write(indice.toString());
+                        writerDocumental.newLine();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public void cargarContenido(int opcion) { //! No carga datos de un ArrayList, Pendiente Arreglar!
+    public void cargarContenido(int opcion) {
 
-        if (opcion == 1) {
+        switch (opcion) {
+            case 1:
+                try(BufferedReader reader = new BufferedReader(new FileReader("peliculas.csv"))) {;
 
-            try(BufferedReader reader = new BufferedReader(new FileReader("peliculas.csv"))) {;
+                    String linea;
 
-                String linea;
+                    while ((linea = reader.readLine()) != null) {
 
-                while ((linea = reader.readLine()) != null) {
+                        ArrayList<Actor> actores = new ArrayList<>();
+                        String[] campos = linea.split(",");
 
-                    ArrayList<Actor> actores = new ArrayList<>();
-                    String[] campos = linea.split(",");
+                        String titulo = campos[1].trim();
+                        int duracionEnMinutos = Integer.parseInt(campos[2].trim());
+                        String genero = campos[3].trim();
+                        String estudio = campos[4].trim();
 
-                    int id = Integer.parseInt(campos[0].trim());
-                    String titulo = campos[1].trim();
-                    int duracionEnMinutos = Integer.parseInt(campos[2].trim());
-                    String genero = campos[3].trim();
-                    String estudio = campos[4].trim();
+                        for (int i = 5; i < campos.length; i++) {
+                            String campo = campos[i].replaceAll("[\\[\\]\\s]", "");
+                            if (!campo.isEmpty()) {
+                                try {
+                                    String nombreActores = campo;
+                                    actores.add(new Actor(nombreActores));
+                                } catch (NumberFormatException e){
 
-                    for (int i = 5; i < campos.length; i++) {
-                        String campo = campos[i].replaceAll("[\\[\\]\\s]", "");
-                        if (!campo.isEmpty()) {
-                            try {
-                                String nombreActores = campo;
-                                actores.add(new Actor(nombreActores));
-                            } catch (NumberFormatException e){
-
+                                }
                             }
                         }
+
+                        Pelicula nuevaPelicula = new Pelicula(titulo, duracionEnMinutos, genero, estudio);
+                        nuevaPelicula.agregarListaActores(actores);
+                        peliculas.add(nuevaPelicula);
                     }
 
-                    peliculas.add(new Pelicula(titulo, duracionEnMinutos, genero, estudio));
-                    peliculas.get(id).agregarListaActores(actores);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (opcion == 2) {
-
-            try (BufferedReader reader = new BufferedReader(new FileReader("seriesTV.csv"))) {
+                break;
+            case 2:
+                try (BufferedReader reader = new BufferedReader(new FileReader("seriesTV.csv"))) {
                 
-                String linea;
+                    String linea;
         
-                while ((linea = reader.readLine()) != null) {
+                    while ((linea = reader.readLine()) != null) {
 
-                    ArrayList<Temporada> temporadas = new ArrayList<>();
+                        ArrayList<Temporada> temporadas = new ArrayList<>();
             
-                    String[] campos = linea.split(",");
+                        String[] campos = linea.split(",");
             
-                    int id = Integer.parseInt(campos[0].trim());
-                    String titulo = campos[1].trim();
-                    int duracionEnMinutos = Integer.parseInt(campos[2].trim());
-                    String genero = campos[3].trim();
+                        String titulo = campos[1].trim();
+                        int duracionEnMinutos = Integer.parseInt(campos[2].trim());
+                        String genero = campos[3].trim();
             
-                    for (int i = 4; i < campos.length; i++) {
-                        String campo = campos[i].replaceAll("[\\[\\]\\s]", "");
-                        if (!campo.isEmpty()) {
-                            try {
+                        for (int i = 4; i < campos.length; i++) {
+                            String campo = campos[i].replaceAll("[\\[\\]\\s]", "");
+                            if (!campo.isEmpty()) {
+                                try {
                                     int numeroTemporada = Integer.parseInt(campo);
                                     temporadas.add(new Temporada(numeroTemporada));
-                            } catch (NumberFormatException e) {
+                                } catch (NumberFormatException e) {
 
+                                }
                             }
                         }
+
+                        SerieDeTV nuevaSerieDeTV = new SerieDeTV(titulo, duracionEnMinutos, genero);
+                        nuevaSerieDeTV.agregarListaTemporadas(temporadas);
+                        seriesTV.add(nuevaSerieDeTV);
                     }
 
-                    seriesTV.add(new SerieDeTV(titulo, duracionEnMinutos, genero));
-                    seriesTV.get(id).agregarListaTemporadas(temporadas);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                break;
+            case 3:
+                try(BufferedReader reader = new BufferedReader(new FileReader("documentales.csv")) ) {;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+                    String linea;
 
-        if (opcion == 3) {
+                    while ((linea = reader.readLine()) != null) {
 
-            try(BufferedReader reader = new BufferedReader(new FileReader("documentales.csv")) ) {;
+                        ArrayList<Investigador> investigadores = new ArrayList<>();
 
-                String linea;
+                        String[] campos = linea.split(",");
 
-                while ((linea = reader.readLine()) != null) {
+                        String titulo = campos[1].trim();
+                        int duracionEnMinutos = Integer.parseInt(campos[2].trim());
+                        String genero = campos[3].trim();
+                        String tema = campos[4].trim();
 
-                    ArrayList<Investigador> investigadores = new ArrayList<>();
+                        for (int i = 5; i < campos.length; i++) {
+                            String campo = campos[i].replaceAll("[\\[\\]\\s]", ""); 
 
-                    String[] campos = linea.split(",");
+                            if (!campo.isEmpty()) {
+                                try {
+                                    String nombreInvestigador = campo;
+                                    investigadores.add(new Investigador(nombreInvestigador));
+                                } catch (NumberFormatException e) {
 
-                    int id = Integer.parseInt(campos[0].trim());
-                    String titulo = campos[1].trim();
-                    int duracionEnMinutos = Integer.parseInt(campos[2].trim());
-                    String genero = campos[3].trim();
-                    String tema = campos[4].trim();
-
-                    for (int i = 5; i < campos.length; i++) {
-                       String campo = campos[i].replaceAll("[\\[\\]\\s]", ""); 
-
-                       if (!campo.isEmpty()) {
-                            try {
-                                String nombreInvestigador = campo;
-                                investigadores.add(new Investigador(nombreInvestigador));
-                            } catch (NumberFormatException e) {
-
+                                }
                             }
-                       }
+                        }
+
+                        Documental nuevoDocumental = new Documental(titulo, duracionEnMinutos, genero, tema);
+                        nuevoDocumental.agregarListaInvestigadores(investigadores);
+                        documentales.add(nuevoDocumental);
                     }
 
-                    documentales.add(new Documental(titulo, duracionEnMinutos, genero, tema));
-                    documentales.get(id).agregarListaInvestigadores(investigadores);
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                break;
         }
     }
 
-    public void agregarElementosProduccion(int opcion, int idContenido) {
+    public void agregarElementosProduccion(int opcion, int idContenido, ElementosProduccion elementosProduccion) {
         
-        if (opcion == 1) {
-            peliculas.get(idContenido).agregarActor(vista.pedirDatosActor());
-        }
-
-        else if (opcion == 2) {
-            seriesTV.get(idContenido).agregarTemporada(vista.pedirDatosTemporada());
-        }
-
-        else if (opcion == 3) {
-            documentales.get(idContenido).agregarInvestigadores(vista.pedirDatosInvestigador());
+        switch (opcion) {
+            case 1:
+                peliculas.get(idContenido).agregarActor((Actor) elementosProduccion);
+                break;
+            case 2:
+                seriesTV.get(idContenido).agregarTemporada((Temporada) elementosProduccion);
+                break;
+            case 3:
+                documentales.get(idContenido).agregarInvestigadores((Investigador) elementosProduccion);
+                break;
         }
     }
 }

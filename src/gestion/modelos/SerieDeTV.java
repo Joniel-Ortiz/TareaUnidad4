@@ -37,6 +37,14 @@ public class SerieDeTV extends ContenidoAudiovisual {
         temporadas.addAll(numero);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int setId(int id) {
+        return this.id = id;
+    }
+
     @Override
     public void mostrarDetalles() {
         

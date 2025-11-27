@@ -80,7 +80,7 @@ public class Vista {
             int opcion = leerOpcion();
 
             if (opcion > 0 && opcion < 4) {
-                controlador.agregarContenido(opcion);
+                pedirDatosContenido(opcion);
                 System.out.println("");
                 System.out.println("Contenido agregado exitosamente!");
             }
@@ -112,12 +112,14 @@ public class Vista {
             int opcion = leerOpcion();
 
             if (opcion > 0 && opcion < 4) {
-                controlador.mostrarContenido(opcion);
+
                 System.out.println("");
                 System.out.println("Escribe el ID del contenido que deseas eliminar: ");
-                System.out.println("");
-                System.out.print("Opcion: ");
-                controlador.eliminarContenido(opcion);
+                controlador.mostrarContenido(opcion);  
+                System.out.println(""); 
+                System.out.print("ID: ");
+                int id = leerOpcion();
+                controlador.eliminarContenido(opcion,id);     
                 System.out.println("");
                 System.out.println("Contenido eliminado exitosamente!");
             }
@@ -149,7 +151,6 @@ public class Vista {
             int opcion = leerOpcion();
 
             if (opcion > 0 && opcion < 4) {
-                System.out.println("");
                 controlador.mostrarContenido(opcion);
             }
 
@@ -251,7 +252,7 @@ public class Vista {
                 System.out.println("");
                 System.out.print("ID: ");
                 int idContenido = leerOpcion();
-                controlador.agregarElementosProduccion(opcion,idContenido);
+                pedirDatosElementos(opcion, idContenido);
                 System.out.println("");
                 System.out.println("Elemento agregado con exito!");
             }
@@ -272,76 +273,80 @@ public class Vista {
         return sc.nextInt();
     }
 
-    public Pelicula pedirDatosPelicula() {
-        System.out.println("");
-        System.out.print("Titulo: ");
-        String titulo = sc.next();
-        System.out.print("Duracion en minutos: ");
-        int duracionEnMinutos = sc.nextInt();
-        System.out.print("Genero: ");
-        String genero = sc.next();
-        System.out.print("Estudio: ");
-        String estudio = sc.next();
-
-        Pelicula pelicula = new Pelicula(titulo, duracionEnMinutos, genero, estudio);
-        return pelicula;
-    }
-
-    public SerieDeTV pedirDatosSerieTV() {
-        System.out.println("");
-        System.out.print("Titulo: ");
-        String titulo = sc.next();
-        System.out.print("Duracion en minutos: ");
-        int duracionEnMinutos = sc.nextInt();
-        System.out.print("Genero: ");
-        String genero = sc.next();
-
-        SerieDeTV serieTV = new SerieDeTV(titulo, duracionEnMinutos, genero);
-        return serieTV;
-    }
-
-    public Documental pedirDatosDocumental() {
-        System.out.println("");
-        System.out.print("Titulo: ");
-        String titulo = sc.next();
-        System.out.print("Duracion en minutos: ");
-        int duracionEnMinutos = sc.nextInt();
-        System.out.print("Genero: ");
-        String genero = sc.next();
-        System.out.print("Tema: ");
-        String tema = sc.next();
-
-        Documental documental = new Documental(titulo, duracionEnMinutos, genero, tema);
-        return documental;
-    }
-
-    public Actor pedirDatosActor () {
-        System.out.println("");
-        System.out.print("Nombre: ");
-        String nombre = sc.next();
-
-        Actor actor = new Actor(nombre);
-        return actor;
-    }
-
-    public Temporada pedirDatosTemporada () {
-        System.out.println("");
-        System.out.print("Numero de temporada: ");
-        int numeroTemporada = sc.nextInt();
-
-        Temporada temporada = new Temporada(numeroTemporada);
-        return temporada;
-    }
-
-    public Investigador pedirDatosInvestigador () {
-        System.out.println("");
-        System.out.print("Nombre: ");
-        String nombre = sc.next();
-
-        Investigador investigador = new Investigador(nombre);
-        return investigador;
-    }
+    public void pedirDatosContenido(int opcion) {
         
+        if (opcion == 1) {
+            System.out.println("");
+            System.out.print("Titulo: ");
+            String titulo = sc.next();
+            System.out.print("Duracion en minutos: ");
+            int duracionEnMinutos = sc.nextInt();
+            System.out.print("Genero: ");
+            String genero = sc.next();
+            System.out.print("Estudio: ");
+            String estudio = sc.next();
+
+            Pelicula pelicula = new Pelicula(titulo, duracionEnMinutos, genero, estudio);
+            controlador.agregarContenido(opcion, pelicula);
+        }
+        else if (opcion == 2) {
+            System.out.println("");
+            System.out.print("Titulo: ");
+            String titulo = sc.next();
+            System.out.print("Duracion en minutos: ");
+            int duracionEnMinutos = sc.nextInt();
+            System.out.print("Genero: ");
+            String genero = sc.next();
+
+            SerieDeTV serieTV = new SerieDeTV(titulo, duracionEnMinutos, genero);
+            controlador.agregarContenido(opcion, serieTV);
+        }
+        else if (opcion == 3) {
+            System.out.println("");
+            System.out.print("Titulo: ");
+            String titulo = sc.next();
+            System.out.print("Duracion en minutos: ");
+            int duracionEnMinutos = sc.nextInt();
+            System.out.print("Genero: ");
+            String genero = sc.next();
+            System.out.print("Tema: ");
+            String tema = sc.next();
+
+            Documental documental = new Documental(titulo, duracionEnMinutos, genero, tema);
+            controlador.agregarContenido(opcion, documental);
+        }
+    }
+
+    public void pedirDatosElementos (int opcion, int id) {
+        
+        if (opcion == 1) {
+            System.out.println("");
+            System.out.print("Nombre: ");
+            String nombre = sc.next();
+
+            Actor actor = new Actor(nombre);
+            controlador.agregarElementosProduccion(opcion, id, actor);
+        }
+
+        else if (opcion == 2) {
+            System.out.println("");
+            System.out.print("Numero de temporada: ");
+            int numeroTemporada = sc.nextInt();
+
+            Temporada temporada = new Temporada(numeroTemporada);
+            controlador.agregarElementosProduccion(opcion, id, temporada);
+        }
+        
+        else if (opcion == 3) {
+            System.out.println("");
+            System.out.print("Nombre: ");
+            String nombre = sc.next();
+
+            Investigador investigador = new Investigador(nombre);
+            controlador.agregarElementosProduccion(opcion, id, investigador);
+        }
+    }
+
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }

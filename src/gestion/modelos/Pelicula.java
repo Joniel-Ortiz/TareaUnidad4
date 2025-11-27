@@ -1,14 +1,9 @@
-/**
- * Class Pelicula
- */
 package gestion.modelos;
 
 import clases.Actor;
 import clases.superclase.ContenidoAudiovisual;
-
 import java.util.ArrayList;
 
-// Subclase Pelicula que extiende de ContenidoAudiovisual
 public class Pelicula extends ContenidoAudiovisual {
 
     private static int contador = 0;
@@ -38,7 +33,15 @@ public class Pelicula extends ContenidoAudiovisual {
     public void agregarListaActores (ArrayList<Actor> actor) {
         actores.addAll(actor);
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public int setId(int id) {
+        return this.id = id;
+    }
+
     @Override
     public void mostrarDetalles() {
         System.out.println("");

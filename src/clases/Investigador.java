@@ -1,6 +1,8 @@
 package clases;
 
-public class Investigador {
+import clases.superclase.ElementosProduccion;
+
+public class Investigador extends ElementosProduccion{
     private String nombre;
 
     public Investigador(String nombre) {
