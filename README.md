@@ -33,4 +33,6 @@ $ mvn exec:java -Dexec.mainClass="clases.Main"
 
 ## Diagrama de clases
 
+Dar click a la imagen para visualizar con mayor calidad.
+
 [![src.png](https://i.postimg.cc/PxKYJmdw/src.png)](https://postimg.cc/jwwLknwx)
