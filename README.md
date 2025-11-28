@@ -30,3 +30,7 @@ $ git clone https://github.com/Joniel-Ortiz/TareaUnidad4.git
 $ mvn clean install
 $ mvn exec:java -Dexec.mainClass="clases.Main"
 ```
+
+## Diagrama de clases
+
+[![src.png](https://i.postimg.cc/PxKYJmdw/src.png)](https://postimg.cc/jwwLknwx)
